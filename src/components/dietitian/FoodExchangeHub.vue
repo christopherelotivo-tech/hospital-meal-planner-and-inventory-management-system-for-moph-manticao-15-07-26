@@ -206,9 +206,9 @@
           </button>
         </form>
         <div class="mt-3 flex gap-2 overflow-x-auto pb-1 hide-scrollbar">
+          <button @click="newMessage = 'Recommend me a Filipino meal with 150 pesos with 1500 kcal for breakfast'" class="shrink-0 px-3 py-1.5 bg-purple-50 hover:bg-purple-100 text-purple-700 rounded-full text-xs font-medium transition-colors border border-purple-200">₱150 Breakfast Menu</button>
           <button @click="newMessage = 'Generate a 1500 kcal Diabetic Diet menu'" class="shrink-0 px-3 py-1.5 bg-purple-50 hover:bg-purple-100 text-purple-700 rounded-full text-xs font-medium transition-colors border border-purple-200">1500 kcal Diabetic</button>
           <button @click="newMessage = 'Create a High Protein (100g) meal pattern'" class="shrink-0 px-3 py-1.5 bg-purple-50 hover:bg-purple-100 text-purple-700 rounded-full text-xs font-medium transition-colors border border-purple-200">High Protein Pattern</button>
-          <button @click="newMessage = 'Low Sodium/Low Fat menu ideas'" class="shrink-0 px-3 py-1.5 bg-purple-50 hover:bg-purple-100 text-purple-700 rounded-full text-xs font-medium transition-colors border border-purple-200">Low Sodium/Fat</button>
         </div>
       </div>
     </div>
@@ -238,6 +238,24 @@ const messages = ref([initialMessage]);
 const getMockResponse = (prompt) => {
   const p = prompt.toLowerCase();
   
+  if (p.includes('150 pesos') || p.includes('breakfast')) {
+    return `Here is a **Budget Filipino Breakfast (₱150)** matching a portion of a 1500 kcal daily plan:
+
+### Macronutrient Breakdown (Breakfast Portion - ~450 kcal)
+* **Carbohydrates:** 65g
+* **Protein:** 20g
+* **Fat:** 12g
+
+### Sample Menu & Estimated Cost
+* **1.5 cups Garlic Rice (Sinangag):** ₱25
+* **2 pieces Daing na Bangus (small):** ₱75
+* **1 Boiled Egg:** ₱15
+* **1 slice fresh Papaya:** ₱20
+* **Total Cost:** ₱135 (Under budget!)
+
+*This adheres perfectly to the Philippine Food Exchange guidelines for a balanced morning meal.*`;
+  }
+
   if (p.includes('protein')) {
     return `Here is a **High Protein Pattern (100g)** based on the Food Exchange List:
 
