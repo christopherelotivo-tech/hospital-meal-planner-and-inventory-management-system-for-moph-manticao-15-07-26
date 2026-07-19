@@ -104,6 +104,19 @@ Build the following API endpoints in Laravel:
 * Create a controller method to calculate ingredient deductions.
 * **Logic:** When the **Kitchen Staff** marks a production schedule as "Completed" for the day, the system must loop through all assigned meals for that day, find the corresponding ingredients (and quantities) for those dishes, and deduct those quantities from the `ingredients` table.
 
+### Step 4: DOH Audit Reporting
+* Create an endpoint to generate comprehensive reports for DOH (Department of Health) audits.
+* **Logic:** The backend should compile data from `purchase_history` (expenses) and `meal_assignments` (budget adherence) and return a structured report matching the `DohReport.vue` requirements.
+
+### Step 5: AI Food Exchange Chatbot Integration
+* The Dietitian portal includes a "Food Exchange AI" tool.
+* **Logic:** Create a Laravel service that connects to an LLM API (like OpenAI or Gemini). Expose an endpoint (`POST /api/chat/food-exchange`) that takes a dietitian's query (e.g., "What can I substitute for 100g of pork?") and returns nutritional equivalents based on Philippine Food Exchange lists.
+
+### Step 6: Database Triggers & Observers (Automation)
+* Use Laravel Observers (or MySQL triggers) to automate background tasks.
+* **Example 1:** When a patient's status changes to "Discharged", automatically trigger a job to cancel any future `meal_assignments`.
+* **Example 2:** When a `purchase_history` record is inserted, automatically log an entry in the system activity logs.
+
 ---
 
 ## 5. How to Connect Frontend to Backend
