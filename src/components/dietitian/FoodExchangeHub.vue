@@ -220,6 +220,7 @@ import { ref, nextTick } from 'vue';
 import { Table2, Sparkles, BookOpen, Printer, RefreshCw, Send } from 'lucide-vue-next';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
+import axios from 'axios';
 
 const activeTab = ref('table');
 const isTyping = ref(false);
@@ -296,7 +297,7 @@ const scrollToBottom = async () => {
   }
 };
 
-const sendMessage = () => {
+const sendMessage = async () => {
   if (!newMessage.value.trim() || isTyping.value) return;
 
   // Add user message
@@ -310,15 +311,30 @@ const sendMessage = () => {
   isTyping.value = true;
   scrollToBottom();
 
-  // Simulate AI delay
-  setTimeout(() => {
+  try {
+    // Try to call the real backend API
+    const response = await axios.post('http://localhost:8000/api/chat/food-exchange', {
+      prompt: userPrompt
+    });
+    
     isTyping.value = false;
     messages.value.push({
       role: 'ai',
-      content: getMockResponse(userPrompt)
+      content: response.data.message
     });
     scrollToBottom();
-  }, 1500);
+  } catch (error) {
+    console.warn("AI Backend API not ready or failed. Falling back to mock data.", error);
+    // Simulate AI delay for the mock fallback
+    setTimeout(() => {
+      isTyping.value = false;
+      messages.value.push({
+        role: 'ai',
+        content: getMockResponse(userPrompt)
+      });
+      scrollToBottom();
+    }, 1500);
+  }
 };
 
 const printAIResponse = (content) => {
