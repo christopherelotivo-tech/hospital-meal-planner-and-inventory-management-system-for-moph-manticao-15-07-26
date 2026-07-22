@@ -89,6 +89,11 @@ The Dietitian's workflow happens across 4 screens that feed into each other chro
    - The Dietitian bulk-assigns standard dishes to the 85 normal patients here.
    - The backend aggregates the ingredients from the bulk Normal diets + the special assigned diets to form the final total ingredient list.
 
+#### ⚠️ Strict Dietary & Financial Rules (MUST BE ENFORCED)
+* **The ₱150 Daily Budget:** The system enforces a strict ₱150 budget limit **PER PATIENT, PER DAY**. This covers the combined cost of Breakfast, Lunch, and Dinner. If the selected dishes exceed this daily amount, the UI triggers a financial warning.
+* **Allergy Validation:** The system maps patient allergies against dish ingredients. If a Dietitian attempts to assign a dish containing a known allergen for that patient, the system triggers a critical warning block.
+* **Dietary Filtering:** The UI dropdowns only display dishes that are medically safe for the patient's specific dietary prescription (e.g., Diabetics only see Diabetic-friendly options).
+
 ### Phase 3: Purchasing (JIT Procurement & Market Pivots)
 1. The aggregated ingredients from `DailyProduction.vue` flow into the **`PurchasingOfficerDashboard.vue` (Market List)**. 
 2. The Purchasing Officer prints this list, goes to the market, and buys the items.
