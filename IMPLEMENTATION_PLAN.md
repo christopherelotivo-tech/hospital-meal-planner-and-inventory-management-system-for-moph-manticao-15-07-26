@@ -80,11 +80,9 @@ To help the AI backend developer understand how the modules connect, here is the
 ### Phase 2: Dietitian Planning & Assignment
 1. The Dietitian sees the Doctor's prescription in **`PrescriptionsView.vue`**.
 2. Using the **`DishMenu.vue`** (where recipes and ingredient mappings live) and the **`FoodExchangeHub.vue`** AI, the Dietitian plans meals.
-3. The Dietitian uses the **`MealCalendar.vue`** to define the hospital's default "Standard Meals" for the week.
-4. In **`MealAssignmentScreen.vue`**, the Dietitian formally assigns meals for tomorrow.
-   * **Bulk Assignment (Efficiency):** The system provides a "Bulk Assign" function that automatically loops through all admitted patients. If a patient is on a "Normal Diet" AND has no allergies conflicting with the calendar's standard meals, they are instantly assigned the standard meals.
-   * **Manual Assignment:** For patients with special diets (Diabetic, Low-Sodium) or allergies, the system skips them during bulk assignment, forcing the Dietitian to manually assign specialized dishes.
-5. The backend aggregates all assigned dishes (both bulk and manual) and breaks them down into their core ingredients to form the **`DailyProduction.vue`** list.
+3. **`MealAssignmentScreen.vue` (For Special Cases ONLY):** The Dietitian uses this screen *strictly* to assign specific dishes to the minority of patients with special diets (Diabetics, Renal) or severe allergies.
+4. **`DailyProduction.vue` (The Bulk Planner):** This is the master screen for bulk planning. The system automatically calculates the total Census (e.g., 100), subtracts the special assigned patients (e.g., 15), and leaves the remaining "Normal Diet" patients (85). The Dietitian bulk-assigns standard dishes to these 85 patients directly from this screen, without creating individual patient assignment records.
+5. The backend aggregates the ingredients from the bulk Normal diets + the special assigned diets to form the final ingredient list for Purchasing and Kitchen.
 
 ### Phase 3: Purchasing (JIT Procurement)
 1. The aggregated ingredients flow into the **`PurchasingOfficerDashboard.vue` (Market List)**. 
