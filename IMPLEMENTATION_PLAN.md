@@ -80,8 +80,11 @@ To help the AI backend developer understand how the modules connect, here is the
 ### Phase 2: Dietitian Planning & Assignment
 1. The Dietitian sees the Doctor's prescription in **`PrescriptionsView.vue`**.
 2. Using the **`DishMenu.vue`** (where recipes and ingredient mappings live) and the **`FoodExchangeHub.vue`** AI, the Dietitian plans meals.
-3. In **`MealAssignmentScreen.vue`**, the Dietitian formally assigns Breakfast, Lunch, and Dinner dishes to the patient for a specific date (usually tomorrow).
-4. The backend aggregates all assigned dishes and breaks them down into their core ingredients to form the **`DailyProduction.vue`** list.
+3. The Dietitian uses the **`MealCalendar.vue`** to define the hospital's default "Standard Meals" for the week.
+4. In **`MealAssignmentScreen.vue`**, the Dietitian formally assigns meals for tomorrow.
+   * **Bulk Assignment (Efficiency):** The system provides a "Bulk Assign" function that automatically loops through all admitted patients. If a patient is on a "Normal Diet" AND has no allergies conflicting with the calendar's standard meals, they are instantly assigned the standard meals.
+   * **Manual Assignment:** For patients with special diets (Diabetic, Low-Sodium) or allergies, the system skips them during bulk assignment, forcing the Dietitian to manually assign specialized dishes.
+5. The backend aggregates all assigned dishes (both bulk and manual) and breaks them down into their core ingredients to form the **`DailyProduction.vue`** list.
 
 ### Phase 3: Purchasing (JIT Procurement)
 1. The aggregated ingredients flow into the **`PurchasingOfficerDashboard.vue` (Market List)**. 
